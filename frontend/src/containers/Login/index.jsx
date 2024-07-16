@@ -1,12 +1,17 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import {useForm} from "react-hook-form"
+import { useForm } from "react-hook-form"
 import * as yup from 'yup'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { api } from '../../services/api';
 
-import { Container, LeftContainer, RightContainer, Title, Form, InputContainer } from "./login-styles";
+import { Container, LeftContainer, RightContainer, Title, Form, InputContainer, Link } from "./login-styles";
 import Logo from "../../assets/logo.svg"
 import { Button } from "../../components/Button/button-index";
 
 export default function Login() {
+    const navigate = useNavigate();
+
     const schema = yup
         .object({
             email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatorio'),
@@ -20,8 +25,27 @@ export default function Login() {
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) })
 
-
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = async (data) => {
+        const response = await toast.promise(
+            api.post('/session', {
+                email: data.email,
+                password: data.password,
+            }),
+            {
+                pending: 'Verificando seus dados',
+                success: {
+                    render() {
+                        setTimeout(() => {
+                            navigate('/')
+                        }, 2000);
+                        return `Seja Bem-Vindo(a)👌`;
+                    },
+                },
+                error: 'Email ou Senha Incorretos 🤯',
+            }
+        );
+        console.log(response);
+    }
 
     return (
         <Container>
@@ -52,9 +76,8 @@ export default function Login() {
                     <Button type="submit">Entrar</Button>
                 </Form>
 
-                <p>Não possui conta?<a> Clique aqui.</a></p>
+                <p>Não possui conta?<Link to="/cadastro"> Clique aqui.</Link></p>
             </RightContainer>
         </Container>
-
     );
 }

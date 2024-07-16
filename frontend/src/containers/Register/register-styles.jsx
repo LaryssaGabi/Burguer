@@ -3,7 +3,6 @@ import {Link as ReactLink} from 'react-router-dom'
 import BackgroudLogin from '../../assets/backgroud-login.svg'
 import Backgroud from '../../assets/backgroud.svg'
 
-
 export const Container = styled.div`
     display: flex;
     height: 100vh;
@@ -54,14 +53,7 @@ export const Title = styled.h2`
     font-weight: 400;
     font-size: 40px;
     line-height: 100%;
-    color: #FFFFFF;
-
-    span{
-        color:#9758a6 ;
-        font-family: "Road Rage", sans-serif;
-    }
-
-
+    color:#9758a6 ;
 `;
 export const Form = styled.form`
     display: flex;
