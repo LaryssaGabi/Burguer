@@ -4,12 +4,16 @@ import * as yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { api } from '../../services/api';
+import { useUser } from '../../hooks/UserContext'
 
 import { Container, LeftContainer, RightContainer, Title, Form, InputContainer, Link } from "./login-styles";
 import Logo from "../../assets/logo.svg"
 import { Button } from "../../components/Button/button-index";
 
 export default function Login() {
+    const { putUserData } = useUser();
+
+
     const navigate = useNavigate();
 
     const schema = yup
@@ -26,26 +30,31 @@ export default function Login() {
     } = useForm({ resolver: yupResolver(schema) })
 
     const onSubmit = async (data) => {
-        const response = await toast.promise(
-            api.post('/session', {
-                email: data.email,
-                password: data.password,
-            }),
-            {
-                pending: 'Verificando seus dados',
-                success: {
-                    render() {
-                        setTimeout(() => {
-                            navigate('/')
-                        }, 2000);
-                        return `Seja Bem-Vindo(a)👌`;
+        try {
+            const response = await toast.promise(
+                api.post('/session', {
+                    email: data.email,
+                    password: data.password,
+                }),
+                {
+                    pending: 'Verificando seus dados',
+                    success: {
+                        render() {
+                            setTimeout(() => {
+                                navigate('/');
+                            }, 2000);
+                            return 'Seja Bem-Vindo(a)👌';
+                        },
                     },
-                },
-                error: 'Email ou Senha Incorretos 🤯',
-            }
-        );
-        console.log(response);
-    }
+                    error: 'Email ou Senha Incorretos 🤯',
+                }
+            );
+            const userData = response.data;
+            putUserData(userData);
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+        }
+    };
 
     return (
         <Container>
