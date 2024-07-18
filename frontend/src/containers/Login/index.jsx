@@ -11,8 +11,8 @@ import Logo from "../../assets/logo.svg"
 import { Button } from "../../components/Button/button-index";
 
 export default function Login() {
-    const { putUserData } = useUser();
 
+    const { putUserData } = useUser();
 
     const navigate = useNavigate();
 

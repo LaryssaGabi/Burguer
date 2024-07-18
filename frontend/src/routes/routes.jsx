@@ -8,7 +8,7 @@ import Home from '../containers/Home';
 export const router = createBrowserRouter([
     {
         path: '*',
-        element: <PrivateRoutes element={Home} />,
+        element: <PrivateRoutes element={<Home />} />,
     },
     {
         path: '/login',
