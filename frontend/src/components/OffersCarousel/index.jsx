@@ -1,6 +1,7 @@
 import { Container, Title, ContainerItens, Image, TextOverlay } from './offers-styles'
 import { api } from '../../services/api'
 import { useEffect, useState } from 'react'
+import formatCurrency from '../../utils/formatCrurrency'
 import Carousel from 'react-elastic-carousel'
 
 export default function OffersCarousel() {
@@ -11,7 +12,9 @@ export default function OffersCarousel() {
         async function loadOffers() {
             const { data } = await api.get('/products')
 
-            const onlyOffers = data.filter(product => product.offer)
+            const onlyOffers = data.filter(product => product.offer).map(product => {
+                return { ...product, formatedPrice: formatCurrency(product.price) }
+            })
             setOffers(onlyOffers)
         }
 
@@ -35,6 +38,7 @@ export default function OffersCarousel() {
                 style={{ width: '85%' }}
                 breakPoints={breakPoints}
 
+
             >
                 {
                     offers && offers.map(product => (
@@ -42,7 +46,7 @@ export default function OffersCarousel() {
                             <Image src={product.url} alt="foto das ofertas" />
                             <TextOverlay>
                                 <h3>{product.name}</h3>
-                                <p>{product.price}</p>
+                                <p>{product.formatedPrice}</p>
 
                             </TextOverlay>
                         </ContainerItens>
