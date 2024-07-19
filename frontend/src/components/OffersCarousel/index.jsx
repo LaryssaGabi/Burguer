@@ -1,19 +1,21 @@
-import { Container, Title, ContainerItens, Image, TextOverlay } from './category-styles'
+import { Container, Title, ContainerItens, Image, TextOverlay } from './offers-styles'
 import { api } from '../../services/api'
 import { useEffect, useState } from 'react'
 import Carousel from 'react-elastic-carousel'
 
-export default function CategoryCarousel() {
-    const [categories, setCategories] = useState([])
+export default function OffersCarousel() {
+    const [offers, setOffers] = useState([])
 
     useEffect(() => {
 
-        async function loadCategories() {
-            const { data } = await api.get('/categories')
-            setCategories(data)
+        async function loadOffers() {
+            const { data } = await api.get('/products')
+
+            const onlyOffers = data.filter(product => product.offer)
+            setOffers(onlyOffers)
         }
 
-        loadCategories()
+        loadOffers()
     }, [])
 
     const breakPoints = [
@@ -26,20 +28,21 @@ export default function CategoryCarousel() {
 
     return (
         <Container>
-            <Title>CATEGORIAS</Title>
+            <Title>OFERTAS DO DIA</Title>
 
             <Carousel
                 itemsToShow={5}
-                style={{ width: '85%'}}
+                style={{ width: '85%' }}
                 breakPoints={breakPoints}
-                
+
             >
                 {
-                    categories && categories.map(category => (
-                        <ContainerItens key={category.id}>
-                            <Image src={category.url} alt="foto da categoria" />
+                    offers && offers.map(product => (
+                        <ContainerItens key={product.id}>
+                            <Image src={product.url} alt="foto das ofertas" />
                             <TextOverlay>
-                                <h3>{category.name}</h3>
+                                <h3>{product.name}</h3>
+                                <p>{product.price}</p>
 
                             </TextOverlay>
                         </ContainerItens>

@@ -22,6 +22,7 @@ export const Title = styled.h1`
 `
 
 export const CategoriSection = styled.div`
+    flex-direction: column;
     display: flex;
     justify-content: center;
     align-items: center;
