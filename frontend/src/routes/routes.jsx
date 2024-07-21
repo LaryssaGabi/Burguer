@@ -4,6 +4,7 @@ import Register from '../containers/Register';
 import PrivateRoutes from './private-routes';
 import Home from '../containers/Home';
 import Products from '../containers/Products';
+import Cart from '../containers/Cart';
 
 export const router = createBrowserRouter([
     {
@@ -21,5 +22,9 @@ export const router = createBrowserRouter([
     {
         path: '/produtos',
         element: <PrivateRoutes element={<Products />} />,
+    },
+    {
+        path: '/carrinho',
+        element: <PrivateRoutes element={<Cart />} />,
     },
 ]);
