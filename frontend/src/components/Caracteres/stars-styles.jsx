@@ -14,10 +14,10 @@ const SvgStar = styled.svg`
   height: 24px;
   cursor: pointer;
   transition: transform 0.2s, fill 0.2s, background-color 0.2s, stroke 0.2s;
-  background: ${({ active }) => active ? '#D2D2CF' : '#D2D2CF'}; 
+  background: ${({ active }) => active === 'true' ? '#D2D2CF' : '#D2D2CF'}; 
   border-radius: 50%; 
-  stroke: ${({ active }) => active ? 'none' : 'currentColor'}; 
-  fill: ${({ active }) => active ? 'yellow' : 'none'}; 
+  stroke: ${({ active }) => active === 'true' ? 'none' : 'currentColor'}; 
+  fill: ${({ active }) => active === 'true' ? 'yellow' : 'none'}; 
   margin: 0 2px;
   padding: 2px;
 
@@ -46,7 +46,7 @@ const StarRating = ({ rating, onRate }) => {
                 <SvgStar
                     key={index}
                     onClick={() => handleStarClick(index)}
-                    active={index < rating}
+                    active={(index < rating).toString()} // Passar 'true' ou 'false' como string
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="none"

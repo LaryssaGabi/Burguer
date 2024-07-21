@@ -2,9 +2,11 @@ import { Container, Title, ContainerItens, Image, TextOverlay } from './category
 import { api } from '../../services/api'
 import { useEffect, useState } from 'react'
 import Carousel from 'react-elastic-carousel'
+import { useNavigate } from 'react-router-dom'
 
 export default function CategoryCarousel() {
     const [categories, setCategories] = useState([])
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -23,6 +25,11 @@ export default function CategoryCarousel() {
         { width: 900, itemsToShow: 4 },
         { width: 1800, itemsToShow: 5 },
     ]
+    
+    const handleCategoryClick = () => {
+        navigate('/produtos');
+    };
+    
 
     return (
         <Container>
@@ -36,11 +43,10 @@ export default function CategoryCarousel() {
             >
                 {
                     categories && categories.map(category => (
-                        <ContainerItens key={category.id}>
+                        <ContainerItens key={category.id} onClick={handleCategoryClick}>
                             <Image src={category.url} alt="foto da categoria" />
                             <TextOverlay>
                                 <h3>{category.name}</h3>
-
                             </TextOverlay>
                         </ContainerItens>
                     ))

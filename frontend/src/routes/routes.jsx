@@ -5,11 +5,9 @@ import PrivateRoutes from './private-routes';
 import Home from '../containers/Home';
 import Products from '../containers/Products';
 
-
-
 export const router = createBrowserRouter([
     {
-        path: '*',
+        path: '/',
         element: <PrivateRoutes element={<Home />} />,
     },
     {
@@ -22,8 +20,6 @@ export const router = createBrowserRouter([
     },
     {
         path: '/produtos',
-        element: <Products />,
+        element: <PrivateRoutes element={<Products />} />,
     },
 ]);
-
-
