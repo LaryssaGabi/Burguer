@@ -3,6 +3,8 @@ import Login from '../containers/Login';
 import Register from '../containers/Register';
 import PrivateRoutes from './private-routes';
 import Home from '../containers/Home';
+import Products from '../containers/Products';
+
 
 
 export const router = createBrowserRouter([
@@ -17,6 +19,10 @@ export const router = createBrowserRouter([
     {
         path: '/cadastro',
         element: <Register />,
+    },
+    {
+        path: '/produtos',
+        element: <Products />,
     },
 ]);
 
