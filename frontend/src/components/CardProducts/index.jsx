@@ -5,6 +5,7 @@ import { ContainerItens, Image, ContainerDiv, TextOverlay } from './cardproducts
 import StarRating from '../Caracteres/stars-styles'
 import HeartIcon from '../Caracteres/heart-styles'
 import { ShoppingBasket } from '../Caracteres/basket-shop'
+import { useCard } from '../../hooks/CardContect'
 
 export default function CardProducts({ product }) {
     const [liked, setLiked] = useState({});
@@ -23,6 +24,8 @@ export default function CardProducts({ product }) {
             [id]: rating
         }));
     };
+
+    const {putProductInCard} = useCard()
 
     return (
         <ContainerItens key={product.id}>
@@ -44,7 +47,7 @@ export default function CardProducts({ product }) {
                     </div>
                 </TextOverlay>
             </ContainerDiv>
-            <ShoppingBasket />
+            <ShoppingBasket onClick={() =>putProductInCard(product)} />
         </ContainerItens>
     )
 }

@@ -78,7 +78,7 @@ export const CategoryButton = styled.button`
     border: none;
     background: none;
     border-bottom: ${props => props.active === 'true' ? '2px solid #9758a6' : 'none'};
-    color: ${props => props.active === 'true' ? '#9758a6' : '#9a9a90'};
+    color: ${props => props.active === 'true' ? '#9758a6' : '#090909'};
     font-size: 15px;
     line-height: 20px;
 `;

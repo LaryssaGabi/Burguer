@@ -6,14 +6,14 @@ import { router } from './routes/routes';
 
 
 import GlobalStyles from './styles/globalStyles'
-import { UserProvider } from '../src/hooks/UserContext'
+import AppProvider from '../src/hooks'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <UserProvider>
+    <AppProvider>
       <RouterProvider router={router} />
-    </UserProvider>
+    </AppProvider>
     <GlobalStyles />
     <ToastContainer autoClose={2000} theme="colored" />
   </React.StrictMode>

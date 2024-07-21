@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Shopping from '../../assets/shopping-basket.svg'
 
-export const ShoppingBasket = styled.div`
+export const ShoppingBasket = styled.button`
     background: url('${Shopping}') no-repeat center;
     background-size: 3vh; 
     width: 3vh;
@@ -10,6 +10,7 @@ export const ShoppingBasket = styled.div`
     top:85%;
     position: absolute;  
     cursor: pointer;
+    border: none;
    
 
     &:hover {
@@ -22,3 +23,4 @@ export const ShoppingBasket = styled.div`
         box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.2);
     }
 `;
+

@@ -6,6 +6,7 @@ import Carousel from 'react-elastic-carousel'
 import HeartIcon from '../Caracteres/heart-styles'
 import { ShoppingBasket } from '../Caracteres/basket-shop'
 import StarRating from '../Caracteres/stars-styles';
+import { useCard } from '../../hooks/CardContect'
 
 
 export default function OffersCarousel() {
@@ -50,6 +51,8 @@ export default function OffersCarousel() {
         }));
     };
 
+    const {putProductInCard} = useCard()
+
     return (
         <Container>
             <Title>OFERTAS DO DIA</Title>
@@ -83,7 +86,7 @@ export default function OffersCarousel() {
                                 </TextOverlay>
 
                             </ContainerDiv>
-                            <ShoppingBasket />
+                            <ShoppingBasket onClick={() =>putProductInCard(product)}/>
                         </ContainerItens>
 
                     ))

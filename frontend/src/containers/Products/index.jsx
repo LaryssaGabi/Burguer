@@ -6,6 +6,7 @@ import CardProducts from '../../components/CardProducts'
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'
 
+
 export default function Products() {
     const [categories, setCategories] = useState([])
     const [products, setProducts] = useState([])
@@ -43,6 +44,7 @@ export default function Products() {
     const handleBack = () => {
         navigate('/');
     };
+    
     
 
     return (
