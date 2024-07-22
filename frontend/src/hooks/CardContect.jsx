@@ -6,6 +6,10 @@ const CardContext = createContext({});
 export const CardProvider = ({ children }) => {
     const [cardProducts, setCardProducts] = useState([]);
 
+    const updateLocalStorage = async (products) => {
+        await localStorage.setItem('codeburger:cardInfo', JSON.stringify(products));
+    }
+
     const putProductInCard = async product => {
         const cardIndex = cardProducts.findIndex(prd => prd.id === product.id);
 
@@ -21,13 +25,15 @@ export const CardProvider = ({ children }) => {
         }
 
         setCardProducts(newCardProducts);
-        await localStorage.setItem('codeburger:cardInfo', JSON.stringify(newCardProducts));
+
+        await updateLocalStorage(newCardProducts);
     };
 
     const deleteProducts = async productId => {
         const newCardProducts = cardProducts.filter(product => product.id !== productId);
         setCardProducts(newCardProducts);
-        await localStorage.setItem('codeburger:cardInfo', JSON.stringify(newCardProducts));
+
+        await updateLocalStorage(newCardProducts);
     };
 
     const increaseProducts = async productId => {
@@ -35,7 +41,7 @@ export const CardProvider = ({ children }) => {
             product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
         );
         setCardProducts(newCardProducts);
-        await localStorage.setItem('codeburger:cardInfo', JSON.stringify(newCardProducts));
+        await updateLocalStorage(newCardProducts);
     };
 
     const decreaseProducts = async productId => {
@@ -46,9 +52,9 @@ export const CardProvider = ({ children }) => {
                 p.id === productId ? { ...p, quantity: newQuantity } : p
             );
             setCardProducts(newCardProducts);
-            await localStorage.setItem('codeburger:cardInfo', JSON.stringify(newCardProducts));
-            
-            // Remove the product if its quantity drops to 0
+            await updateLocalStorage(newCardProducts);
+
+
             if (newQuantity === 0) {
                 await deleteProducts(productId);
             }
