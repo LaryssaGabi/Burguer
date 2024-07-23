@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { api } from '../../services/api';
+import api  from '../../services/api';
 import { useUser } from '../../hooks/UserContext'
 
 import { Container, LeftContainer, RightContainer, Title, Form, InputContainer, Link } from "./login-styles";

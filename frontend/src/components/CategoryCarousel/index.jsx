@@ -1,5 +1,5 @@
 import { Container, Title, ContainerItens, Image, TextOverlay } from './category-styles'
-import { api } from '../../services/api'
+import api from '../../services/api'
 import { useEffect, useState } from 'react'
 import Carousel from 'react-elastic-carousel'
 import { useNavigate } from 'react-router-dom'
@@ -25,11 +25,11 @@ export default function CategoryCarousel() {
         { width: 900, itemsToShow: 4 },
         { width: 1800, itemsToShow: 5 },
     ]
-    
+
     const handleCategoryClick = () => {
         navigate('/produtos');
     };
-    
+
 
     return (
         <Container>
@@ -37,9 +37,9 @@ export default function CategoryCarousel() {
 
             <Carousel
                 itemsToShow={5}
-                style={{ width: '85%'}}
+                style={{ width: '85%' }}
                 breakPoints={breakPoints}
-                
+
             >
                 {
                     categories && categories.map(category => (

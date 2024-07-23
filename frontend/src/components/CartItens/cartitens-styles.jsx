@@ -4,14 +4,23 @@ import { Plus, Minus } from 'lucide-react';
 export const ContainerMain = styled.div`
     display: flex;
     flex-direction: column;
+    padding: 20px;
 `;
+
 export const Container = styled.div`
-    align-items:center ;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    display: grid;
-    grid-template-columns: 2fr 1fr; 
-    gap: 80px; 
-    padding: 45px 100px 0 150px; 
+    padding: 20px;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+        display: grid;
+        grid-template-columns: 2fr 1fr; 
+        gap: 80px; 
+        padding: 45px 100px 0 100px; 
+    }
 `;
 
 export const ItemsSection = styled.div`
@@ -21,6 +30,11 @@ export const ItemsSection = styled.div`
     background: #FFFFFF;
     border-radius: 20px;
     margin: 0 20px; 
+    margin-bottom: 20px; 
+
+    @media (min-width: 768px) {
+        margin-bottom: 0; 
+    }
 `;
 
 export const Header = styled.div`
@@ -32,6 +46,10 @@ export const Header = styled.div`
     padding: 10px;
     border-radius: 20px 20px 0 0;
     font-weight: bold;
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 `;
 
 export const Body = styled.div`
@@ -50,29 +68,36 @@ export const Body = styled.div`
     &:last-child {
         border-bottom: none;
     }
+
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
 `;
+
 export const SummaryContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
     gap: 20px;
 
+    @media (min-width: 768px) {
+        width: 80%;
+    }
 `;
 
 export const Button = styled.button`
-        width: 100%;
-        padding: 10px;
-        border: none;
-        border-radius: 10px;
-        background-color: #8A4FFF; 
-        color: white;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #8A4FFF; 
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 
-        &:hover {
-            background-color: #6e3bb2;
-        }
-    
+    &:hover {
+        background-color: #6e3bb2;
+    }
 `;
 
 export const Summary = styled.div`
@@ -100,17 +125,26 @@ export const Summary = styled.div`
     }
 
     .total {
-        margin-top: 120px;
+        margin-top: 80px;
         font-weight: bold;
         font-size: 1.2em;
     }
 
+    @media (max-width: 768px) {
+        h2, p {
+            font-size: 0.9em;
+        }
 
+        .total {
+            font-size: 1em;
+            margin-top: 30px;
+        }
+    }
 `;
+
 export const EmptyMessage = styled.div`
     margin-top: 80px;
     grid-column: 1 / -1; 
-    margin-right: 45px;
     font-family: "Road Rage", sans-serif;
     font-size: 3vw; 
     display: flex;
@@ -121,6 +155,10 @@ export const EmptyMessage = styled.div`
     border-radius: 20px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    @media (max-width: 768px) {
+        font-size: 5vw;
+    }
 `;
 
 export const ButtonBack = styled.button`
@@ -138,11 +176,18 @@ export const ButtonBack = styled.button`
     margin-top: 30px;
     margin-bottom: 45px;
 
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 `;
+
 export const DivContainer = styled.div`
     display: flex;
     gap: 20px;
 
+    @media (max-width: 768px) {
+        gap: 10px;
+    }
 `;
 
 export const StyledPlus = styled(Plus)`
@@ -153,7 +198,7 @@ export const StyledPlus = styled(Plus)`
     }
 `;
 
-// Estilo para o ícone Minus
+
 export const StyledMinus = styled(Minus)`
     cursor: pointer;
     color: #5C2669; 

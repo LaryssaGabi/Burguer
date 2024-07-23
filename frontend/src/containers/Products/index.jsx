@@ -1,7 +1,7 @@
 import Categorias from '../../assets/categorias.svg'
 import { useEffect, useState } from 'react'
 import { Container, Title, ImageCategorias, CategoriSection, CategoriSeletion, CategoryButton, ContainerTitle, ProductsContainer, SubTitle, Button } from './products-styles'
-import { api } from '../../services/api'
+import api from '../../services/api'
 import CardProducts from '../../components/CardProducts'
 import { ChevronLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom'

@@ -1,5 +1,5 @@
 import { Container, Title, ContainerItens, Image, ContainerDiv, TextOverlay } from './offers-styles'
-import { api } from '../../services/api'
+import api from '../../services/api'
 import { useEffect, useState } from 'react'
 import formatCurrency from '../../utils/formatCrurrency'
 import Carousel from 'react-elastic-carousel'
@@ -51,7 +51,7 @@ export default function OffersCarousel() {
         }));
     };
 
-    const {putProductInCard} = useCard()
+    const { putProductInCard } = useCard()
 
     return (
         <Container>
@@ -86,7 +86,7 @@ export default function OffersCarousel() {
                                 </TextOverlay>
 
                             </ContainerDiv>
-                            <ShoppingBasket onClick={() =>putProductInCard(product)}/>
+                            <ShoppingBasket onClick={() => putProductInCard(product)} />
                         </ContainerItens>
 
                     ))

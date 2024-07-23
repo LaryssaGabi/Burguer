@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { toast } from 'react-toastify'
-import { api } from '../../services/api';
+import api from '../../services/api';
 
 import { Container, LeftContainer, RightContainer, Title, Form, InputContainer, Link } from "./register-styles";
 import Logo from "../../assets/logo.svg"
