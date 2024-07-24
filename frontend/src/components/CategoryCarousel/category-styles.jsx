@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import Backgroud from '../../assets/backgroud.svg'
+import { Link } from 'react-router-dom';
 
 export const Container = styled.div`
     position: relative;
@@ -59,7 +60,7 @@ export const Title = styled.h2`
     color: #9758A6;
 `
 
-export const ContainerItens = styled.div`
+export const ContainerItens = styled(Link)`
     position: relative;
     display: flex;
     flex-direction: column;

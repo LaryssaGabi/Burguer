@@ -1,31 +1,36 @@
-import PropTypes from 'prop-types'
-import { useState } from 'react'
-import formatCurrency from '../../utils/formatCrurrency'
-import { ContainerItens, Image, ContainerDiv, TextOverlay } from './cardproducts-styler'
-import StarRating from '../Caracteres/stars-styles'
-import HeartIcon from '../Caracteres/heart-styles'
-import { ShoppingBasket } from '../Caracteres/basket-shop'
-import { useCard } from '../../hooks/CardContect'
+import { toast } from 'react-toastify';
+import PropTypes from 'prop-types';
+import { useState } from 'react';
+import formatCurrency from '../../utils/formatCrurrency';
+import { ContainerItens, Image, ContainerDiv, TextOverlay } from './cardproducts-styler';
+import StarRating from '../Caracteres/stars-styles';
+import HeartIcon from '../Caracteres/heart-styles';
+import { ShoppingBasket } from '../Caracteres/basket-shop';
+import { useCard } from '../../hooks/CardContect';
 
 export default function CardProducts({ product }) {
     const [liked, setLiked] = useState({});
     const [ratings, setRatings] = useState({});
+    const { putProductInCard } = useCard();
 
     const handleLike = (id) => {
         setLiked(prev => ({
             ...prev,
-            [id]: !prev[id]
+            [id]: !prev[id],
         }));
     };
 
     const handleRate = (id, rating) => {
         setRatings(prev => ({
             ...prev,
-            [id]: rating
+            [id]: rating,
         }));
     };
 
-    const {putProductInCard} = useCard()
+    const handleAddToCart = () => {
+        putProductInCard(product);
+        toast.success('Produto adicionado ao carrinho!');
+    };
 
     return (
         <ContainerItens key={product.id}>
@@ -47,9 +52,9 @@ export default function CardProducts({ product }) {
                     </div>
                 </TextOverlay>
             </ContainerDiv>
-            <ShoppingBasket onClick={() =>putProductInCard(product)} />
+            <ShoppingBasket onClick={handleAddToCart} />
         </ContainerItens>
-    )
+    );
 }
 
 CardProducts.propTypes = {
@@ -57,6 +62,6 @@ CardProducts.propTypes = {
         id: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         price: PropTypes.number.isRequired,
-        url: PropTypes.string
-    }).isRequired
-}
+        url: PropTypes.string,
+    }).isRequired,
+};

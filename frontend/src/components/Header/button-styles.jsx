@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -17,10 +18,10 @@ export const SectionRight = styled.div`
     gap: 20px;
 `;
 
-export const PageLinks = styled.a`
+export const PageLinks = styled(({ isActive, ...props }) => <a {...props} />)`
     display: flex;
     align-items: center;
-    color: #FFFFFF;
+    color: ${({ isActive }) => (isActive ? '#9758A6' : '#FFFFFF')};
     text-decoration: none;
     font-family: 'Poppins';
     font-style: normal;
@@ -30,12 +31,12 @@ export const PageLinks = styled.a`
     cursor: pointer;
 
     &:hover {
-        color: #CCCCCC;
+       color: #9758A6;
     }
 `;
 
 export const LogDev = styled.img`
-    width: 3.5vw;
+    width: 3.2vw;
     margin-right: 70px;
 `;
 
@@ -62,7 +63,6 @@ export const ContainerText = styled.div`
     justify-content: center;
     color: #FFFFFF;
 
-
     p {
         margin: 0;
         font-family: 'Poppins';
@@ -71,7 +71,6 @@ export const ContainerText = styled.div`
         font-size: 12px;
         line-height: 1.5;
         color: #fff;
-        
     }
 
     span {
@@ -85,15 +84,22 @@ export const ContainerText = styled.div`
 
     a {
         position: relative;
-        color: #FF6347; 
+        color: #ff300b; 
         font-size: 12px;
         text-decoration: none;
-        right: 10px;
+        left: 20px;
     }
 
     a:hover {
-        color: #FF4500;  
+        color: #7f2302;  
     }
+`;
+
+export const UserContainer = styled.div`
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
 `;
 
 export const Divider = styled.div`

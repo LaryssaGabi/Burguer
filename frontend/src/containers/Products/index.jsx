@@ -3,52 +3,55 @@ import { useEffect, useState } from 'react'
 import { Container, Title, ImageCategorias, CategoriSection, CategoriSeletion, CategoryButton, ContainerTitle, ProductsContainer, SubTitle, Button } from './products-styles'
 import api from '../../services/api'
 import CardProducts from '../../components/CardProducts'
-import { ChevronLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom'
-
+import { ChevronLeft } from 'lucide-react'
+import Header from '../../components/Header/header-index'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 export default function Products() {
-    const [categories, setCategories] = useState([])
-    const [products, setProducts] = useState([])
-    const [filteredProducts, setFilteredProducts] = useState([])
-    const [activeCategories, setActiveCategories] = useState(0)
+    const location = useLocation();
     const navigate = useNavigate();
+    
+    // Extraindo o categoryId da query string
+    const queryParams = new URLSearchParams(location.search);
+    const categoryId = parseInt(queryParams.get('category')) || 0;
+
+    const [categories, setCategories] = useState([]);
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [activeCategories, setActiveCategories] = useState(categoryId);
 
     useEffect(() => {
         async function loadCategories() {
-            const { data } = await api.get('/categories')
-            const newCategories = [{ id: 0, name: 'Todos' }, ...data]
-            setCategories(newCategories)
+            const { data } = await api.get('/categories');
+            const newCategories = [{ id: 0, name: 'Todos' }, ...data];
+            setCategories(newCategories);
         }
 
         async function loadProducts() {
-            const { data } = await api.get('/products')
-            setProducts(data)
+            const { data } = await api.get('/products');
+            setProducts(data);
         }
 
-        loadProducts()
-        loadCategories()
-    }, [])
+        loadProducts();
+        loadCategories();
+    }, []);
 
     useEffect(() => {
-        if (activeCategories == 0) {
-            setFilteredProducts(products)
+        if (activeCategories === 0) {
+            setFilteredProducts(products);
         } else {
-            const newFilteredProducts = products.filter(product => product.category_id == activeCategories)
-
-            setFilteredProducts(newFilteredProducts)
+            const newFilteredProducts = products.filter(product => product.category_id === activeCategories);
+            setFilteredProducts(newFilteredProducts);
         }
-    }, [activeCategories, products])
-
+    }, [activeCategories, products]);
 
     const handleBack = () => {
         navigate('/');
     };
-    
-    
 
     return (
         <Container>
+            <Header />
             <ImageCategorias src={Categorias} alt="logo da home" />
             <ContainerTitle>
                 <Title>O MELHOR <br />
@@ -82,5 +85,5 @@ export default function Products() {
                 </Button>
             </CategoriSection>
         </Container>
-    )
+    );
 }

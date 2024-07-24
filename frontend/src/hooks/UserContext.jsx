@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
@@ -11,6 +12,11 @@ export const UserProvider = ({ children }) => {
 
         await localStorage.setItem('codeburger:userData', JSON.stringify(userInfo))
     }
+
+    const logout = async () =>{
+        await localStorage.removeItem('codeburger:userData')
+    }
+    
 
 
     useEffect(() => {
@@ -26,7 +32,7 @@ export const UserProvider = ({ children }) => {
     }, [])
 
     return (
-        <UserContext.Provider value={{ putUserData, userData }}>
+        <UserContext.Provider value={{ putUserData, userData, logout }}>
             {children}
         </UserContext.Provider>
     );
