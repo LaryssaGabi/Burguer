@@ -6,7 +6,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { Container, SectionRight, PageLinks, LogDev, SectionLeft, Logo, User, ContainerText, Divider, UserContainer } from './button-styles';
 
 export default function Header() {
-    const { logout } = useUser();
+    const { logout, userData } = useUser();
     const navigate = useNavigate();
     const location = useLocation();
     const { pathname } = location;
@@ -31,7 +31,7 @@ export default function Header() {
                 <ContainerText>
                     <UserContainer>
                         <User src={UserLogo} alt="Logo do usuário" />
-                        <p>Olá, <span>Laryssa</span></p>
+                        <p>Olá, <span>{userData.name}</span></p>
                     </UserContainer>
                     <PageLinks onClick={logoutUser}>Sair</PageLinks>
                 </ContainerText>
