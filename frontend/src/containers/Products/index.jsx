@@ -11,7 +11,6 @@ export default function Products() {
     const location = useLocation();
     const navigate = useNavigate();
     
-    // Extraindo o categoryId da query string
     const queryParams = new URLSearchParams(location.search);
     const categoryId = parseInt(queryParams.get('category')) || 0;
 

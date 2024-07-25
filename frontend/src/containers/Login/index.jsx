@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import * as yup from 'yup'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import api  from '../../services/api';
+import api from '../../services/api';
 import { useUser } from '../../hooks/UserContext'
 
 import { Container, LeftContainer, RightContainer, Title, Form, InputContainer, Link } from "./login-styles";
@@ -13,12 +13,11 @@ import { Button } from "../../components/Button/button-index";
 export default function Login() {
 
     const { putUserData } = useUser();
-
     const navigate = useNavigate();
 
     const schema = yup
         .object({
-            email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatorio'),
+            email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
             password: yup.string().min(6, 'A senha deve ter pelo menos 6 caracteres').required('Digite uma senha.'),
         })
         .required()
@@ -38,19 +37,22 @@ export default function Login() {
                 }),
                 {
                     pending: 'Verificando seus dados',
-                    success: {
-                        render() {
-                            setTimeout(() => {
-                                navigate('/');
-                            }, 2000);
-                            return 'Seja Bem-Vindo(a)👌';
-                        },
-                    },
+                    success: 'Seja Bem-Vindo(a)👌',
                     error: 'Email ou Senha Incorretos 🤯',
                 }
             );
+
             const userData = response.data;
             putUserData(userData);
+
+            setTimeout(() => {
+                if (userData.admin) {
+                    navigate('/pedidos');
+                } else {
+                    navigate('/');
+                }
+            }, 2000);
+            
         } catch (error) {
             console.error('Erro ao fazer login:', error);
         }
