@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import { Container } from "./orders-styler";
 import api from '../../../services/api'
 import Row from './row'
+import FormatDate from "../../../utils/formatDate";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -26,11 +27,11 @@ export default function Orders() {
     return {
       name: order.user.name,
       orderId: order._id,
-      date: order.createdAt,
+      date: FormatDate(order.createdAt),
       status: order.status,
       products: order.products.map(product => ({
         ...product,
-        quantity: Number(product.quantity) // Convertendo quantidade para número
+        quantity: Number(product.quantity) 
       }))
     };
   }
@@ -55,7 +56,7 @@ export default function Orders() {
           </TableHead>
           <TableBody>
             {rows.map((row) => (
-              <Row key={row.orderId} row={row}/> 
+              <Row key={row.orderId} row={row} />
             ))}
           </TableBody>
         </Table>

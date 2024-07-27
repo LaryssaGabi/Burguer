@@ -12,6 +12,8 @@ import Typography from '@mui/material/Typography';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
+import { ProductsImg } from './orders-styler';
+
 export default function Row({ row }) {
   const [open, setOpen] = useState(false);
 
@@ -59,7 +61,7 @@ export default function Row({ row }) {
                       <TableCell>{productRow.name}</TableCell>
                       <TableCell>{productRow.category}</TableCell>
                       <TableCell>
-                        <img src={productRow.url} alt={productRow.name} style={{ width: '50px', height: '50px' }} />
+                        <ProductsImg src={productRow.url} alt={productRow.name} style={{ width: '50px', height: '50px' }} />
                       </TableCell>
                     </TableRow>
                   ))}
@@ -81,7 +83,7 @@ Row.propTypes = {
     status: PropTypes.string.isRequired,
     products: PropTypes.arrayOf(
       PropTypes.shape({
-        quantity: PropTypes.number.isRequired, 
+        quantity: PropTypes.number.isRequired,
         name: PropTypes.string.isRequired,
         category: PropTypes.string.isRequired,
         url: PropTypes.string.isRequired,
