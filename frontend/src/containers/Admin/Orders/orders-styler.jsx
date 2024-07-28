@@ -16,5 +16,24 @@ export const ReactSelectStyle = styled(ReactSelect)`
         .css-13cymwt-control{
             cursor: pointer;
         }
-       
-    `
+`
+
+export const Menu = styled.div`
+    display: flex;
+    gap:50px;
+    justify-content: center;
+    margin: 20px 0;
+`
+
+export const LinkMenu = styled.a`
+    color: #323d5d;
+    cursor: pointer;
+    font-weight: ${props => (props.isActiveStatus ? 'bold' : '400')};
+    border: ${props => (props.isActiveStatus ? '1px solid #FF8C05' : 'none')};
+    border-radius: 30px;
+    padding: 8px;
+` 
+
+
+
+

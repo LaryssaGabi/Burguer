@@ -17,7 +17,7 @@ export const Container = styled.div`
     width: 100%;
     height: 100%;
     background: url('${BackgroudSection}');
-    opacity: 0.5; /* Ajuste a opacidade conforme necessário */
+    opacity: 0.5;
     z-index: -1;
   }
 `;

@@ -5,7 +5,7 @@ import PrivateRoutes from './private-routes';
 import Home from '../containers/Home';
 import Products from '../containers/Products';
 import Cart from '../containers/Cart';
-import Admin from '../components/Admin';
+import Admin from '../containers/Admin';
 
 export const router = createBrowserRouter([
     {
