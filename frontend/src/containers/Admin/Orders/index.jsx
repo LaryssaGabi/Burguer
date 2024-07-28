@@ -13,6 +13,7 @@ import Row from './row'
 import status from "./order-status";
 import FormatDate from "../../../utils/formatDate";
 
+
 export default function Orders() {
   const [orders, setOrders] = useState([]);
   const [filterOrders, setFilterOrders] = useState([]);
@@ -84,15 +85,15 @@ export default function Orders() {
         )}
       </Menu>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} >
         <Table aria-label="collapsible table">
           <TableHead>
-            <TableRow>
-              <TableCell />
-              <TableCell>Pedidos</TableCell>
-              <TableCell>Cliente</TableCell>
-              <TableCell>Data do pedido</TableCell>
-              <TableCell>Status</TableCell>
+            <TableRow   style={{ background: "#333232" }}>
+              <TableCell  />
+              <TableCell style={{color: "#fff" }}>Pedidos</TableCell>
+              <TableCell style={{color: "#fff" }}>Cliente</TableCell>
+              <TableCell style={{color: "#fff" }}>Data do pedido</TableCell>
+              <TableCell style={{color: "#fff" }}>Status</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

@@ -6,6 +6,7 @@ import Home from '../containers/Home';
 import Products from '../containers/Products';
 import Cart from '../containers/Cart';
 import Admin from '../containers/Admin';
+import paths from '../constants/paths';
 
 export const router = createBrowserRouter([
     {
@@ -29,7 +30,11 @@ export const router = createBrowserRouter([
         element: <PrivateRoutes element={<Cart />} />,
     },
     {
-        path: '/pedidos',
+        path: paths.Order,
+        element: <PrivateRoutes element={<Admin />} isAdmin={true} />,
+    },
+    {
+        path: paths.Products,
         element: <PrivateRoutes element={<Admin />} isAdmin={true} />,
     },
 ]);
