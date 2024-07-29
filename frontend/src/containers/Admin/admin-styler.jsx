@@ -13,5 +13,6 @@ export const ContainerItens = styled.div`
   background-color: #f4f4f4;
   display: flex;
   flex-direction: column;
-  height: 86vh;
+  height: 88vh;
+  width: 100%;
  `

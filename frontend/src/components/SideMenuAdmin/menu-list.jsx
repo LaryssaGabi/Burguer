@@ -18,8 +18,8 @@ const listLinks = [
     },
     {
         id: 3,
-        label: 'Listar Produtos',
-        link: paths.Products,
+        label: 'Novo Produto',
+        link: paths.NewProduct,
         icon: Layers2
     }
 
