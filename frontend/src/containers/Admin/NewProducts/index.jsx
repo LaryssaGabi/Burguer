@@ -19,14 +19,12 @@ export default function NewProducts() {
     price: Yup.number().required('O preço é obrigatório').typeError('O preço deve ser um número'),
     category: Yup.object().required('A categoria é obrigatória'),
     file: Yup.mixed()
-      .test('required', 'Carregue um arquivo', value => {
-        return value?.length > 0;
-      })
+      .required('Carregue um arquivo')
       .test('fileSize', 'Carregue arquivos de até 2MB', value => {
-        return value[0]?.size <= 2000000;
+        return value && value[0]?.size <= 2000000;
       })
-      .test('type', 'Carregue apenas arquivos JPEG', value => {
-        return (value[0]?.type === 'image/jpeg') || (value[0]?.type === 'image/png');
+      .test('type', 'Carregue apenas arquivos JPEG ou PNG', value => {
+        return value && ((value[0]?.type === 'image/jpeg') || (value[0]?.type === 'image/png'));
       })
   });
 
@@ -47,14 +45,7 @@ export default function NewProducts() {
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('price', data.price);
-
-      // Verificar se data.file está definido e contém pelo menos um item
-      if (data.file && data.file.length > 0) {
-        formData.append('file', data.file[0]);
-      } else {
-        throw new Error('Nenhum arquivo foi selecionado');
-      }
-
+      formData.append('file', data.file[0]);
       formData.append('category_id', data.category.value);
 
       await toast.promise(
@@ -77,7 +68,6 @@ export default function NewProducts() {
       console.error('Erro ao criar o produto', error);
     }
   };
-
 
   return (
     <Container>
@@ -112,7 +102,7 @@ export default function NewProducts() {
           {errors.category && <ErrorMessage>{errors.category.message}</ErrorMessage>}
         </div>
 
-        <ButtonStled type="submit" onClick={onSubmit}>Adicionar produto</ButtonStled>
+        <ButtonStled type="submit">Adicionar produto</ButtonStled>
       </form>
     </Container>
   );
