@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function NewProducts() {
   const [fileName, setFileName] = useState(null);
+  const [file, setFile] = useState(null);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -18,14 +19,6 @@ export default function NewProducts() {
     name: Yup.string().required('O nome é obrigatório'),
     price: Yup.number().required('O preço é obrigatório').typeError('O preço deve ser um número'),
     category: Yup.object().required('A categoria é obrigatória'),
-    file: Yup.mixed()
-      .required('Carregue um arquivo')
-      .test('fileSize', 'Carregue arquivos de até 2MB', value => {
-        return value && value[0]?.size <= 2000000;
-      })
-      .test('type', 'Carregue apenas arquivos JPEG ou PNG', value => {
-        return value && ((value[0]?.type === 'image/jpeg') || (value[0]?.type === 'image/png'));
-      })
   });
 
   const { register, handleSubmit, control, formState: { errors } } = useForm({
@@ -41,11 +34,28 @@ export default function NewProducts() {
   }, []);
 
   const onSubmit = async (data) => {
+    if (!file) {
+      toast.error('Carregue um arquivo');
+      return;
+    }
+
+    if (file.size > 2000000) {
+      toast.error('Carregue arquivos de até 2MB');
+      return;
+    }
+
+    if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
+      toast.error('Carregue apenas arquivos JPEG ou PNG');
+      return;
+    }
+
     try {
+      console.log('Dados submetidos:', data);
+
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('price', data.price);
-      formData.append('file', data.file[0]);
+      formData.append('file', file);
       formData.append('category_id', data.category.value);
 
       await toast.promise(
@@ -87,7 +97,11 @@ export default function NewProducts() {
         <div>
           <LabelUpload>
             {fileName ? fileName : <><ImageUp style={{ marginRight: '8px' }} /> Carregar imagem do produto</>}
-            <input type="file" accept="image/png, image/jpeg" {...register("file")} onChange={event => { setFileName(event.target.files[0]?.name); }} />
+            <input type="file" accept="image/png, image/jpeg" onChange={event => {
+              console.log('Arquivo selecionado:', event.target.files[0]);
+              setFile(event.target.files[0]);
+              setFileName(event.target.files[0]?.name);
+            }} />
           </LabelUpload>
           {errors.file && <ErrorMessage>{errors.file.message}</ErrorMessage>}
         </div>
