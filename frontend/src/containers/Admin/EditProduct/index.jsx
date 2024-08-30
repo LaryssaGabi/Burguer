@@ -1,25 +1,28 @@
 import { toast } from 'react-toastify';
 import { useEffect, useState } from "react";
-import { Container, Label, Input, ButtonStled, LabelUpload, ErrorMessage } from "./editProduct-styler";
+import { Container, Label, Input, ButtonStled, LabelUpload, ErrorMessage, ContainerInput } from "./editProduct-styler";
 import api from '../../../services/api';
 import ReactSelect from 'react-select';
 import { useForm, Controller } from "react-hook-form";
 import { ImageUp } from 'lucide-react';
 import * as Yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 export default function EditProduct() {
+  
   const { id } = useParams();  // Obtendo o ID da URL
   const [fileName, setFileName] = useState(null);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  const [product, setProduct] = useState(null);
+  const location = useLocation();  // Para acessar dados passados pela navegação
+  const [product, setProduct] = useState(location.state?.product || null);
 
   const schema = Yup.object().shape({
     name: Yup.string().required('O nome é obrigatório'),
     price: Yup.number().required('O preço é obrigatório').typeError('O preço deve ser um número'),
     category: Yup.object().required('A categoria é obrigatória'),
+    offer: Yup.bool()
   });
 
   const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
@@ -33,16 +36,21 @@ export default function EditProduct() {
   });
 
   const onSubmit = async (data) => {
+    console.log('Product ID:', product.id);
+
     const formData = new FormData();
     formData.append('name', data.name);
     formData.append('price', data.price);
-    if (data.file.length > 0) {
-        formData.append('file', data.file[0]);
+    if (data.file && data.file.length > 0) {
+      formData.append('file', data.file[0]);
     }
     formData.append('category_id', data.category.value);
+    formData.append('offer', data.offer);
+
+
 
     await toast.promise(
-      api.put(`products/${id}`, formData),
+      api.put(`products/${product.id}`, formData),
       {
         pending: 'Editando novo produto...',
         success: 'Produto editado com sucesso',
@@ -53,6 +61,14 @@ export default function EditProduct() {
       }
     );
 
+    try {
+      const { data: updatedProduct } = await api.get(`products/${product.id}`);
+      setProduct(updatedProduct);
+    } catch (error) {
+      console.error('Erro ao buscar o produto atualizado:', error);
+    }
+
+    
     setTimeout(() => {
       navigate('/listar-produtos');
     }, 2000);
@@ -63,36 +79,45 @@ export default function EditProduct() {
       const { data } = await api.get('categories');
       setCategories(data.map(category => ({ value: category.id, label: category.name })));
     }
-    
+
     async function loadProduct() {
-      const { data } = await api.get(`products/${id}`);
-      setProduct(data);
-      reset({
-        name: data.name,
-        price: data.price,
-        category: data.category ? { value: data.category.id, label: data.category.name } : null,
-        file: null
-      });
+      if (!product) {
+        const { data } = await api.get(`products/${id}`);
+        setProduct(data);
+        reset({
+          name: data.name,
+          price: data.price,
+          category: data.category ? { value: data.category.id, label: data.category.name } : null,
+          file: null
+        });
+      } else {
+        reset({
+          name: product.name,
+          price: product.price,
+          category: product.category ? { value: product.category.id, label: product.category.name } : null,
+          file: null
+        });
+      }
     }
-    
+
     loadCategories();
     loadProduct();
-  }, [id, reset]);
+  }, [id, reset, product]);
 
-  if (!product) return <p>Carregando...</p>;  // Renderiza mensagem enquanto carrega os dados
+  if (!product) return <p>Carregando...</p>;
 
   return (
     <Container>
       <form noValidate onSubmit={handleSubmit(onSubmit)}>
         <div>
           <Label>Nome</Label>
-          <Input type="text" {...register("name")} defaultValue={product.name}/>
+          <Input type="text" {...register("name")} />
           {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
         </div>
 
         <div>
           <Label>Preço</Label>
-          <Input type="number" {...register("price")} defaultValue={product.price} />
+          <Input type="number" {...register("price")} />
           {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
         </div>
 
@@ -114,7 +139,12 @@ export default function EditProduct() {
           {errors.category && <ErrorMessage>{errors.category.message}</ErrorMessage>}
         </div>
 
-        <ButtonStled type="submit">Adicionar produto</ButtonStled>
+        <ContainerInput>
+          <input type="checkbox" {...register("offer")} defaultChecked={product.offer} />
+          <Label>Produto em oferta?</Label>
+        </ContainerInput>
+
+        <ButtonStled type="submit">Atualizar produto</ButtonStled>
       </form>
     </Container>
   );

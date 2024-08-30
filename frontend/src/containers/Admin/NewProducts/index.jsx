@@ -45,13 +45,12 @@ export default function NewProducts() {
     }
 
     if (file.type !== 'image/jpeg' && file.type !== 'image/png') {
-      toast.error('Carregue apenas arquivos JPEG ou PNG');
+      toast.error('Carregue apenas arquivos JPEG, PNG');
       return;
     }
 
     try {
-      console.log('Dados submetidos:', data);
-
+  
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('price', data.price);

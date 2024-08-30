@@ -12,8 +12,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
-import { CircleX } from 'lucide-react';
-import { CircleCheck } from 'lucide-react';
+import { CircleX, CircleCheck } from 'lucide-react';
 
 export default function ListProducts() {
     const [products, setProducts] = useState([]);
@@ -28,14 +27,11 @@ export default function ListProducts() {
     }, []);
 
     function isOffer(offerStatus) {
-        if (offerStatus) {
-            return <CircleCheck size={20} color="#34C759" />;
-        }
-        return <CircleX size={20} color="#FF3B30" />;
+        return offerStatus ? <CircleCheck size={20} color="#34C759" /> : <CircleX size={20} color="#FF3B30" />;
     }
 
     function editProduct(product) {
-        navigate(`/editar-produto/${product.id}`);
+        navigate('/editar-produto', { state: { product } });
     }
 
     return (
@@ -62,8 +58,12 @@ export default function ListProducts() {
                                 </TableCell>
                                 <TableCell>{formatCurrency(product.price)}</TableCell>
                                 <TableCell align='center'>{isOffer(product.offer)}</TableCell>
-                                <TableCell align='center'><Img src={product.url} alt="imagem-produto" /></TableCell>
-                                <TableCell><PencilImg onClick={() => editProduct(product)} /></TableCell>
+                                <TableCell align='center'>
+                                    <Img src={product.url} alt="imagem-produto" />
+                                </TableCell>
+                                <TableCell>
+                                    <PencilImg onClick={() => editProduct(product)} />
+                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>

@@ -79,3 +79,16 @@ export const ErrorMessage = styled.div`
   font-size: 13px;
   margin-bottom: 5px;
 `;
+
+export const ContainerInput = styled.div`
+margin-top: 20px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+
+    input{
+        width: 15px;
+        height: 15px;
+        cursor: pointer;
+    }
+`;
