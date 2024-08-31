@@ -62,6 +62,7 @@ export const Title = styled.h2`
 `
 
 export const ContainerItens = styled.div`
+
     margin-bottom: 25px;
     position: relative;
     display: flex;
@@ -75,6 +76,7 @@ export const Image = styled.img`
     width: 148.34px;
     height: 97.89px;
     left: 55px;
+    border-radius: 20px;
     transform: rotate(-5.31deg);
     z-index: 1;
 `
@@ -91,8 +93,6 @@ export const ContainerDiv = styled.div`
 
 
 export const TextOverlay = styled.div`
-
-
 
     h3{
         padding: 80px 0 0 26px;

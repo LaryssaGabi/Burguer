@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 export default function EditProduct() {
-  
+
   const { id } = useParams();  // Obtendo o ID da URL
   const [fileName, setFileName] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -36,16 +36,16 @@ export default function EditProduct() {
   });
 
   const onSubmit = async (data) => {
-    console.log('Product ID:', product.id);
-
     const formData = new FormData();
+
     formData.append('name', data.name);
     formData.append('price', data.price);
-    if (data.file && data.file.length > 0) {
-      formData.append('file', data.file[0]);
-    }
     formData.append('category_id', data.category.value);
     formData.append('offer', data.offer);
+
+    // if (data.file && data.file.length > 0) {
+    //   formData.append('file', data.file[0]);  // Anexando o arquivo ao FormData
+    // }
 
 
 
@@ -68,7 +68,7 @@ export default function EditProduct() {
       console.error('Erro ao buscar o produto atualizado:', error);
     }
 
-    
+
     setTimeout(() => {
       navigate('/listar-produtos');
     }, 2000);
@@ -118,13 +118,21 @@ export default function EditProduct() {
         <div>
           <Label>Preço</Label>
           <Input type="number" {...register("price")} />
-          {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage> }
+          {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
         </div>
 
         <div>
           <LabelUpload>
             {fileName ? fileName : <><ImageUp style={{ marginRight: '8px' }} /> Carregar imagem do produto</>}
-            <input type="file" accept="image/png, image/jpeg" {...register("file")} onChange={event => { setFileName(event.target.files[0]?.name); }} />
+            <input
+              type="file"
+              accept="image/png, image/jpeg"
+              {...register("file")}
+              onChange={event => {
+                const file = event.target.files[0];
+                setFileName(file?.name);
+              }}
+            />
           </LabelUpload>
           {errors.file && <ErrorMessage>{errors.file.message}</ErrorMessage>}
         </div>

@@ -10,7 +10,7 @@ import { useNavigate, useLocation } from 'react-router-dom'
 export default function Products() {
     const location = useLocation();
     const navigate = useNavigate();
-    
+
     const queryParams = new URLSearchParams(location.search);
     const categoryId = parseInt(queryParams.get('category')) || 0;
 
@@ -49,40 +49,43 @@ export default function Products() {
     };
 
     return (
-        <Container>
-            <Header />
-            <ImageCategorias src={Categorias} alt="logo da home" />
-            <ContainerTitle>
-                <Title>O MELHOR <br />
-                    HAMBÚRGUER <br />
-                    ESTÁ AQUI!
-                </Title>
-                <SubTitle>Esse cardápio está irresistível!</SubTitle>
-            </ContainerTitle>
-            <CategoriSection>
-                <CategoriSeletion>
-                    {categories && categories.map(category => (
-                        <CategoryButton
-                            key={category.id}
-                            active={activeCategories === category.id ? 'true' : undefined}
-                            onClick={() => setActiveCategories(category.id)}
-                        >
-                            {category.name}
-                        </CategoryButton>
-                    ))}
-                </CategoriSeletion>
+        <>
+            <Container>
+                <Header />
+                <ImageCategorias src={Categorias} alt="logo da home" />
+                <ContainerTitle>
+                    <Title>O MELHOR
+                        HAMBÚRGUER
+                        ESTÁ AQUI!
+                    </Title>
+                    <SubTitle>Esse cardápio está irresistível!</SubTitle>
+                </ContainerTitle>
+                
+                <CategoriSection>
+                    <CategoriSeletion>
+                        {categories && categories.map(category => (
+                            <CategoryButton
+                                key={category.id}
+                                active={activeCategories === category.id ? 'true' : undefined}
+                                onClick={() => setActiveCategories(category.id)}
+                            >
+                                {category.name}
+                            </CategoryButton>
+                        ))}
+                    </CategoriSeletion>
 
-                <ProductsContainer>
-                    {filteredProducts && filteredProducts.map(product => (
-                        <CardProducts key={product.id} product={product} />
-                    ))}
-                </ProductsContainer>
+                    <ProductsContainer>
+                        {filteredProducts && filteredProducts.map(product => (
+                            <CardProducts key={product.id} product={product} />
+                        ))}
+                    </ProductsContainer>
 
-                <Button onClick={handleBack}>
-                    <ChevronLeft color="#5C2669" />
-                    Voltar
-                </Button>
-            </CategoriSection>
-        </Container>
+                    <Button onClick={handleBack}>
+                        <ChevronLeft color="#5C2669" />
+                        Voltar
+                    </Button>
+                </CategoriSection>
+            </Container >
+        </>
     );
 }

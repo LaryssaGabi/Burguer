@@ -15,6 +15,8 @@ export const Image = styled.img`
     width: 148.34px;
     height: 97.89px;
     left: 55px;
+
+    border-radius: 20px;
     transform: rotate(-5.31deg);
     z-index: 1;
 `

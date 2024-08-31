@@ -21,26 +21,29 @@ export const ContainerTitle = styled.div`
     flex-direction: column;
     text-align: center; 
     color: #FFFFFF;
-    left: 55%;
-    top: 1.7%;
+    left: 500px;
+    top: 300px;
+    transform: translate(120%, -50%);
+   
 `;
 
 export const Title = styled.h1`
- font-family: "Road Rage", sans-serif;
+    width: 25vw;
+    font-family: "Road Rage", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 5vw; 
     line-height: 1.1;
-    text-align: center;
 `;
 
 export const SubTitle = styled.h4`
-font-family: 'Poppins';
+    font-family: 'Poppins';
     font-style: normal;
-    font-size: 1vw;
+    font-size: 1.5vw;
     line-height: 1.1;
-    width: 100%;  
     text-align: center; 
+    margin-top: 10px;
+    color: #FFFFFF;
 `;
 
 export const CategoriSection = styled.div`
