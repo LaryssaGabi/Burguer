@@ -118,7 +118,7 @@ export default function EditProduct() {
         <div>
           <Label>Preço</Label>
           <Input type="number" {...register("price")} />
-          {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
+          {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage> }
         </div>
 
         <div>
