@@ -62,7 +62,6 @@ export const Title = styled.h2`
 `
 
 export const ContainerItens = styled.div`
-
     margin-bottom: 25px;
     position: relative;
     display: flex;

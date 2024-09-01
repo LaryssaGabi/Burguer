@@ -80,7 +80,7 @@ export default function CartItens() {
             </Container>
             <ButtonBack onClick={back}>
                 <ChevronLeft color="#5C2669" />
-                Adicionar produtos
+                Adicionar mais produtos
             </ButtonBack>
         </ContainerMain>
     );

@@ -62,8 +62,9 @@ export default function OffersCarousel() {
 
             <Carousel
                 itemsToShow={5}
-                style={{ width: '85%' }}
+                style={{ width: '85%'}}
                 breakPoints={breakPoints}
+                itemPadding={[20, 10]}
             >
                 {offers && offers.map(product => (
                     <ContainerItens key={product.id}>
