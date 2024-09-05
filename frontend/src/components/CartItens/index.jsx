@@ -29,11 +29,14 @@ export default function CartItens() {
 
         await toast.promise(api.post('orders', { products: order }), {
             pending: 'Realizando o seu pedido...',
-            success: 'Pedido realizado com sucesso!',
+            success: 'Falta pouco para finalizar!',
             error: 'Erro ao realizar o pedido, tente novamente'
         }
         )
 
+        setTimeout(() => {
+            navigate('/pedidoFinalizado')
+        }, 2000);
 
     };
 
