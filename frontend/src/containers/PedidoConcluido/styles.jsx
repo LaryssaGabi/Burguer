@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Backgroud from '../../assets/backgroud-login.svg'
 import BackgroudSection from '../../assets/backgroud.svg'
 
 
@@ -22,22 +21,11 @@ export const Container = styled.div`
   }
 `;
 
-export const LogoCart = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 20%;
-    width: 100%;
-    background: url('${Backgroud}');
-    background-color: #000;
-`
-
 export const ImageCart = styled.img`
     width: 11%;
     height: 100%;
     padding-top: 12px;
 `
-
 
 export const CategoriSection = styled.div`
     display: flex;
@@ -48,5 +36,5 @@ export const CategoriSection = styled.div`
 `
 export const Title = styled.img`
     margin-top:18px;
-
+    margin-bottom: 20px;
 `

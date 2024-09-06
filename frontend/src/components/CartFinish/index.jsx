@@ -49,9 +49,9 @@ export default function CartFinish() {
             error: 'Erro ao realizar o pedido, tente novamente'
         });
 
-        // setTimeout(() => {
-        //     navigate('/pedidoFinalizado')
-        // }, 2000);
+        setTimeout(() => {
+            navigate('/pedidoConcluido')
+        }, 2000);
     };
 
     return (

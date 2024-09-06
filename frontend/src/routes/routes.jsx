@@ -8,6 +8,7 @@ import Cart from '../containers/Cart';
 import Admin from '../containers/Admin';
 import paths from '../constants/paths';
 import ProductFinalizado from '../containers/ProductFinalizado';
+import PedidoConcluido from '../containers/PedidoConcluido';
 
 export const router = createBrowserRouter([
     {
@@ -33,6 +34,10 @@ export const router = createBrowserRouter([
     {
         path: '/pedidoFinalizado',
         element: <PrivateRoutes element={<ProductFinalizado />} />,
+    },
+    {
+        path: '/pedidoConcluido',
+        element: <PrivateRoutes element={<PedidoConcluido />} />,
     },
     {
         path: paths.Order,
