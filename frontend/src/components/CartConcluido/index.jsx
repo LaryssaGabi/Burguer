@@ -1,7 +1,44 @@
+/* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { Container, Title, TimelineContainer, Step, Circle, Line, StepLabel } from "./styles";
+import api from "../../services/api";
 
-export default function CartConcluido() {
-    const currentStep = 3;
+export default function CartConcluido({ orderId }) {
+    const [currentStep, setCurrentStep] = useState(1);
+
+    useEffect(() => {
+        // Buscar status do pedido com base no ID
+        async function fetchOrderStatus() {
+            try {
+                const { data } = await api.get(`/orders/${orderId}`);
+                const status = data.status;
+
+                switch (status) {
+                    case 'Pedido Aceito':
+                        setCurrentStep(1);
+                        break;
+                    case 'Em preparação':
+                        setCurrentStep(2);
+                        break;
+                    case 'Pedido finalizado':
+                        setCurrentStep(3);
+                        break;
+                    case 'Pedido a caminho':
+                        setCurrentStep(4);
+                        break;
+                    case 'Pedido entregue':
+                        setCurrentStep(5);
+                        break;
+                    default:
+                        setCurrentStep(1);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar o status do pedido", error);
+            }
+        }
+
+        fetchOrderStatus();
+    }, [orderId]);
 
     return (
         <Container>
@@ -15,7 +52,7 @@ export default function CartConcluido() {
                 <Line />
                 <Step>
                     <Circle active={currentStep >= 2}>2</Circle>
-                    <StepLabel>Em Produção</StepLabel>
+                    <StepLabel>Em preparação</StepLabel>
                 </Step>
                 <Line />
                 <Step>
@@ -25,12 +62,12 @@ export default function CartConcluido() {
                 <Line />
                 <Step>
                     <Circle active={currentStep >= 4}>4</Circle>
-                    <StepLabel>Pedido em Rota</StepLabel>
+                    <StepLabel>Pedido a caminho</StepLabel>
                 </Step>
                 <Line />
                 <Step>
-                    <Circle active={currentStep >= 4}>4</Circle>
-                    <StepLabel>Pedido entregue</StepLabel>
+                    <Circle active={currentStep >= 5}>5</Circle>
+                    <StepLabel>Pedido Entregue</StepLabel>
                 </Step>
             </TimelineContainer>
         </Container>
