@@ -21,7 +21,7 @@ export default function CartFinish() {
         rua: 'Lorem Ipsum, 65',
         bairro: 'Centro',
         cep: '77777000',
-        cidade: 'São Paulo - SP',
+        cidade: 'Contagem - MG',
     });
 
     const handleAddressChange = (e) => {
