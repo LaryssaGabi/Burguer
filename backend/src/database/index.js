@@ -6,8 +6,9 @@ import configDatabase from '../config/database.js'
 import User from '../app/models/User';
 import Product from '../app/models/Product';
 import Category from '../app/models/Category';
+import Address from '../app/models/Address';
 
-const models = [User, Product, Category]
+const models = [User, Product, Category, Address]
 
 class Database {
     constructor() {

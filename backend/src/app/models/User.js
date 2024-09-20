@@ -1,5 +1,5 @@
-import Sequelize, { Model } from 'sequelize'
-import bcrypt from 'bcrypt'
+import Sequelize, { Model } from 'sequelize';
+import bcrypt from 'bcrypt';
 
 class User extends Model {
     static init(sequelize) {
@@ -9,24 +9,28 @@ class User extends Model {
             password: Sequelize.VIRTUAL,
             password_hash: Sequelize.STRING,
             admin: Sequelize.BOOLEAN
-        },
-            {
-                sequelize,
-            },
-        );
+        }, {
+            sequelize,
+        });
 
+        // Hook para hashear a senha antes de salvar
         this.addHook('beforeSave', async (User) => {
             if (User.password) {
-                User.password_hash = await bcrypt.hash(User.password, 10)
+                User.password_hash = await bcrypt.hash(User.password, 10);
             }
-        })
+        });
 
         return this;
     }
 
-    async checkPassword(password){
-       return bcrypt.compare(password, this.password_hash)
+    static associate(models) {
+        this.hasOne(models.Address, { foreignKey: 'user_id', as: 'address' });
+    }
+
+    // Método para verificar senha
+    async checkPassword(password) {
+        return bcrypt.compare(password, this.password_hash);
     }
 }
 
-export default User;      
+export default User;

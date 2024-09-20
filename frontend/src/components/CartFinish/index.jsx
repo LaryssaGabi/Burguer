@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ContainerMain, Container, SectionsWrapper, AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
 import { useCard } from '../../hooks/CardContect';
 import formatCurrency from '../../utils/formatCrurrency';
@@ -15,14 +15,28 @@ export default function CartFinish() {
     const [deliveryFee] = useState(5);
     const finalAmount = totalAmount + deliveryFee;
 
-    // Estado para gerenciar a edição do endereço
     const [isEditing, setIsEditing] = useState(false);
     const [address, setAddress] = useState({
-        rua: 'Lorem Ipsum, 65',
-        bairro: 'Centro',
-        cep: '77777000',
-        cidade: 'Contagem - MG',
+        rua: '',
+        bairro: '',
+        complemento: '',
+        cep: '',
+        cidade: '',
     });
+
+    // Buscar endereço do usuário ao carregar o componente
+    useEffect(() => {
+        const fetchAddress = async () => {
+            try {
+                const response = await api.get('addresses'); // Endpoint para buscar o endereço
+                setAddress(response.data);
+            } catch (error) {
+                console.error('Erro ao buscar endereço:', error);
+                toast.error('Erro ao carregar endereço');
+            }
+        };
+        fetchAddress();
+    }, []);
 
     const handleAddressChange = (e) => {
         setAddress({
@@ -43,15 +57,36 @@ export default function CartFinish() {
             };
         });
 
-        await toast.promise(api.post('orders', { products: order }), {
-            pending: 'Realizando o seu pedido...',
-            success: 'Pedido Finalizado com sucesso!',
-            error: 'Erro ao realizar o pedido, tente novamente'
-        });
+        try {
+            await api.post('orders', {
+                products: order,
+                address // Adicione o endereço ao pedido
+            });
 
-        setTimeout(() => {
-            navigate('/pedidoConcluido')
-        }, 2000);
+            await toast.promise(api.post('orders', { products: order }), {
+                pending: 'Realizando o seu pedido...',
+                success: 'Pedido Finalizado com sucesso!',
+                error: 'Erro ao realizar o pedido, tente novamente'
+            });
+
+            setTimeout(() => {
+                navigate('/pedidoConcluido')
+            }, 2000);
+        } catch (error) {
+            console.error('Erro ao finalizar o pedido:', error);
+            toast.error('Erro ao finalizar o pedido');
+        }
+    };
+
+    const saveAddress = async () => {
+        try {
+            await api.put(`addresses/${address.id}`, address); // Atualiza o endereço
+            toast.success('Endereço salvo com sucesso!');
+            setIsEditing(false);
+        } catch (error) {
+            console.error('Erro ao salvar endereço:', error);
+            toast.error('Erro ao salvar endereço');
+        }
     };
 
     return (
@@ -110,7 +145,7 @@ export default function CartFinish() {
                                         onChange={handleAddressChange}
                                         placeholder='Cidade'
                                     />
-                                    <a onClick={() => setIsEditing(false)}>Salvar endereço</a>
+                                    <a onClick={saveAddress}>Salvar endereço</a>
                                 </>
                             )}
                         </AddressBody>

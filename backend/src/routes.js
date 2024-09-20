@@ -9,6 +9,7 @@ import SessionController from './app/controllers/SessionController'
 import ProductController from './app/controllers/ProductController'
 import CategoryController from './app/controllers/CategoryController'
 import OrderController from './app/controllers/OrderController'
+import AddressController from './app/controllers/AddressController';
 
 const routes = new Router()
 
@@ -29,6 +30,10 @@ routes.put('/categories/:id', uploads.single('file'), CategoryController.update)
 routes.post('/orders', OrderController.store)
 routes.get('/orders', OrderController.index)
 routes.put('/orders/:id', OrderController.update)
+
+routes.post('/addresses', AddressController.store); 
+routes.get('/addresses', AddressController.show); 
+routes.put('/addresses/:id', AddressController.update);
 
 
 export default routes;
