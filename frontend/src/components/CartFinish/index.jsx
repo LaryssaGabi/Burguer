@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ContainerMain, Container, SectionsWrapper, AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
+import { ContainerMain, Container, SectionsWrapper,  AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
 import { useCard } from '../../hooks/CardContect';
 import formatCurrency from '../../utils/formatCrurrency';
 import { useNavigate } from 'react-router-dom';
