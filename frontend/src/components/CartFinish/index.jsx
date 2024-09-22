@@ -1,18 +1,5 @@
 import { useState, useEffect } from 'react';
-import {
-    ContainerMain,
-    Container,
-    SectionsWrapper,
-    AddressSection,
-    PaymentSection,
-    SummarySection,
-    SectionHeader,
-    AddressBody,
-    PaymentBody,
-    SummaryBody,
-    ButtonBack,
-    ButtonFinalizado
-} from './styles';
+import { ContainerMain, Container, SectionsWrapper, AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
 import { useCard } from '../../hooks/CardContect';
 import formatCurrency from '../../utils/formatCrurrency';
 import { useNavigate } from 'react-router-dom';
@@ -25,8 +12,7 @@ export default function CartFinish() {
     const navigate = useNavigate();
 
     const totalAmount = cardProducts.reduce(
-        (total, product) => total + product.price * product.quantity,
-        0
+        (total, product) => total + product.price * product.quantity, 0
     );
     const [deliveryFee] = useState(5);
     const finalAmount = totalAmount + deliveryFee;
@@ -45,7 +31,7 @@ export default function CartFinish() {
     useEffect(() => {
         const fetchAddress = async () => {
             try {
-                const response = await api.get('addresses'); 
+                const response = await api.get('addresses');
                 setAddress(response.data);
             } catch (error) {
                 console.error('Erro ao buscar endereço:', error);
@@ -107,7 +93,7 @@ export default function CartFinish() {
                 await api.put(`addresses/${address.id}`, address);
             } else {
                 const response = await api.post('addresses', address);
-                setAddress(response.data); 
+                setAddress(response.data);
             }
             toast.success('Endereço salvo com sucesso!');
             setIsEditing(false);
