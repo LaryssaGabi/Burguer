@@ -10,7 +10,7 @@ class Address extends Model {
             cidade: Sequelize.STRING,
             user_id: {
                 type: Sequelize.INTEGER,
-                references: { model: 'users', key: 'id' },  
+                references: { model: 'user', key: 'id' },  
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
             }

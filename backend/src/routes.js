@@ -28,8 +28,8 @@ routes.post('/orders', OrderController.store);
 routes.get('/orders', OrderController.index);
 routes.put('/orders/:id', OrderController.update);
 
-routes.post('/addresses', AddressController.store); 
-routes.get('/addresses', AddressController.show); 
-routes.put('/addresses/:id', AddressController.update);
+routes.post('/address', AddressController.store); 
+routes.get('/address', AddressController.show); 
+routes.put('/address/:id', AddressController.update);
 
 export default routes;

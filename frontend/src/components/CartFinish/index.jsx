@@ -31,7 +31,7 @@ export default function CartFinish() {
     useEffect(() => {
         const fetchAddress = async () => {
             try {
-                const response = await api.get('addresses');
+                const response = await api.get('address');
                 setAddress(response.data);
             } catch (error) {
                 console.error('Erro ao buscar endereço:', error);
@@ -90,9 +90,9 @@ export default function CartFinish() {
     const saveAddress = async () => {
         try {
             if (address.id) {
-                await api.put(`addresses/${address.id}`, address);
+                await api.put(`address/${address.id}`, address);
             } else {
-                const response = await api.post('addresses', address);
+                const response = await api.post('address', address);
                 setAddress(response.data);
             }
             toast.success('Endereço salvo com sucesso!');
