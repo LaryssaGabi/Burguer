@@ -23,8 +23,7 @@ function authMiddlewares(request, response, next) {
 
         request.userId = decoded.id;
         request.userName = decoded.name;
-        
-        // Passa para o próximo middleware
+
         return next();
     });
 }
