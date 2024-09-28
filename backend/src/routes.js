@@ -20,9 +20,9 @@ routes.use(authMiddleware);
 // Rotas para produtos
 routes.post('/products', uploads.single('file'), ProductController.store);
 routes.get('/products', ProductController.index);
-routes.get('/products/:id', ProductController.show);  // Rota para buscar produto por ID
+routes.get('/products/:id', ProductController.show);  
 routes.put('/products/:id', uploads.single('file'), ProductController.update);
-routes.delete('/products/:id', ProductController.delete); // Rota para deletar produto
+routes.delete('/products/:id', ProductController.delete); 
 
 // Rotas para categorias
 routes.post('/categories', uploads.single('file'), CategoryController.store);

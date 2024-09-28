@@ -9,11 +9,12 @@ class Address extends Model {
             cep: Sequelize.STRING,
             cidade: Sequelize.STRING,
             user_id: {
-                type: Sequelize.INTEGER,
-                references: { model: 'user', key: 'id' },  
+                type: Sequelize.UUID, 
+                references: { model: 'Users', key: 'id' }, 
                 onUpdate: 'CASCADE',
                 onDelete: 'CASCADE',
-            }
+                allowNull: false,
+            },
         }, {
             sequelize,
         })
