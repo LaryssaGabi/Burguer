@@ -11,11 +11,11 @@ import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 export default function EditProduct() {
 
-  const { id } = useParams();  // Obtendo o ID da URL
+  const { id } = useParams();
   const [fileName, setFileName] = useState(null);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
-  const location = useLocation();  // Para acessar dados passados pela navegação
+  const location = useLocation();
   const [product, setProduct] = useState(location.state?.product || null);
 
   const schema = Yup.object().shape({
@@ -43,16 +43,15 @@ export default function EditProduct() {
     formData.append('category_id', data.category.value);
     formData.append('offer', data.offer);
 
-    // if (data.file && data.file.length > 0) {
-    //   formData.append('file', data.file[0]);  // Anexando o arquivo ao FormData
-    // }
-
-
+    // Verifica se há um arquivo e o anexa ao formData
+    if (data.file && data.file.length > 0) {
+      formData.append('file', data.file[0]);
+    }
 
     await toast.promise(
       api.put(`products/${product.id}`, formData),
       {
-        pending: 'Editando novo produto...',
+        pending: 'Editando produto...',
         success: 'Produto editado com sucesso',
         error: (error) => {
           const message = error.response?.data?.message || 'Erro ao editar o produto';
@@ -61,13 +60,13 @@ export default function EditProduct() {
       }
     );
 
+    // Carregar o produto atualizado
     try {
       const { data: updatedProduct } = await api.get(`products/${product.id}`);
       setProduct(updatedProduct);
     } catch (error) {
       console.error('Erro ao buscar o produto atualizado:', error);
     }
-
 
     setTimeout(() => {
       navigate('/listar-produtos');
@@ -127,10 +126,13 @@ export default function EditProduct() {
             <input
               type="file"
               accept="image/png, image/jpeg"
-              {...register("file")}
               onChange={event => {
                 const file = event.target.files[0];
                 setFileName(file?.name);
+                reset((prevValues) => ({
+                  ...prevValues,
+                  file: [file]
+                }));
               }}
             />
           </LabelUpload>
