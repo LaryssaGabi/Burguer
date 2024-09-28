@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { ContainerMain, Container, SectionsWrapper,  AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
+import { ContainerMain, Container, SectionsWrapper, AddressSection, PaymentSection, SummarySection, SectionHeader, AddressBody, PaymentBody, SummaryBody, ButtonBack, ButtonFinalizado } from './styles';
 import { useCard } from '../../hooks/CardContect';
 import formatCurrency from '../../utils/formatCrurrency';
 import { useNavigate } from 'react-router-dom';
 import { ChevronLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
 import api from '../../services/api';
+import axios from 'axios';
 
 export default function CartFinish() {
     const { cardProducts } = useCard();
@@ -27,16 +28,15 @@ export default function CartFinish() {
         cidade: '',
     });
 
-
     useEffect(() => {
         const fetchAddress = async () => {
             try {
                 const response = await api.get('address');
-                setAddress(response.data);
+                setAddress(response.data.address);
             } catch (error) {
                 console.error('Erro ao buscar endereço:', error);
                 if (error.response && error.response.status !== 404) {
-                    toast.error('Adicioner um endereço de entrega');
+                    toast.error('Adicione um endereço de entrega');
                 }
             }
         };
@@ -48,6 +48,37 @@ export default function CartFinish() {
             ...address,
             [e.target.name]: e.target.value,
         });
+    };
+
+    const formatCep = (cep) => {
+        return cep.replace(/(\d{5})(\d{3})/, '$1-$2');
+    };
+
+    const handleCepChange = async (e) => {
+        const inputValue = e.target.value;
+        const cep = inputValue.replace(/\D/g, ''); 
+
+        setAddress({ ...address, cep: inputValue });
+
+        if (cep.length === 8) {
+            try {
+                const response = await axios.get(`https://viacep.com.br/ws/${cep}/json/`);
+                if (response.data && !response.data.erro) {
+                    setAddress((prevAddress) => ({
+                        ...prevAddress,
+                        rua: response.data.logradouro,
+                        bairro: response.data.bairro,
+                        cidade: response.data.localidade,
+                        complemento: response.data.complemento || '',
+                    }));
+                } else {
+                    toast.error('CEP não encontrado.');
+                }
+            } catch (error) {
+                console.error('Erro ao buscar endereço pelo CEP:', error);
+                toast.error('Erro ao buscar endereço, tente novamente.');
+            }
+        }
     };
 
     const backView = () => {
@@ -70,7 +101,7 @@ export default function CartFinish() {
 
         try {
             await toast.promise(
-                api.post('orders', { products: order, address }), // Inclui o endereço no pedido
+                api.post('orders', { products: order, address }),
                 {
                     pending: 'Realizando o seu pedido...',
                     success: 'Pedido Finalizado com sucesso!',
@@ -93,7 +124,7 @@ export default function CartFinish() {
                 await api.put(`address/${address.id}`, address);
             } else {
                 const response = await api.post('address', address);
-                setAddress(response.data);
+                setAddress(response.data.address);
             }
             toast.success('Endereço salvo com sucesso!');
             setIsEditing(false);
@@ -119,9 +150,8 @@ export default function CartFinish() {
                                             <p>Rua: {address.rua}</p>
                                             <p>Bairro: {address.bairro}</p>
                                             <p>Complemento: {address.complemento}</p>
-                                            <p>Cep: {address.cep}</p>
+                                            <p>Cep: {formatCep(address.cep)}</p> {/* Formatar aqui */}
                                             <p>Cidade: {address.cidade}</p>
-
                                             <a onClick={() => setIsEditing(true)}>Trocar endereço de entrega</a>
                                         </>
                                     ) : (
@@ -157,8 +187,8 @@ export default function CartFinish() {
                                     <input
                                         type="text"
                                         name="cep"
-                                        value={address.cep}
-                                        onChange={handleAddressChange}
+                                        value={address.cep} // Mantenha o valor do CEP sem formatar aqui
+                                        onChange={handleCepChange} // Formatação acontece ao digitar
                                         placeholder="Cep"
                                     />
                                     <input

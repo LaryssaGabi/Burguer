@@ -15,14 +15,17 @@ const uploads = multer(multerConfig);
 routes.post('/users', UserController.store);
 routes.post('/session', SessionController.store);
 
+// Rota para listar usuários ativos
+routes.get('/sessions/active-users', SessionController.index); 
+
 routes.use(authMiddleware);
 
 // Rotas para produtos
 routes.post('/products', uploads.single('file'), ProductController.store);
 routes.get('/products', ProductController.index);
-routes.get('/products/:id', ProductController.show);  
+routes.get('/products/:id', ProductController.show);
 routes.put('/products/:id', uploads.single('file'), ProductController.update);
-routes.delete('/products/:id', ProductController.delete); 
+routes.delete('/products/:id', ProductController.delete);
 
 // Rotas para categorias
 routes.post('/categories', uploads.single('file'), CategoryController.store);
