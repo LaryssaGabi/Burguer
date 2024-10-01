@@ -9,6 +9,7 @@ import Admin from '../containers/Admin';
 import paths from '../constants/paths';
 import ProductFinalizado from '../containers/ProductFinalizado';
 import PedidoConcluido from '../containers/PedidoConcluido';
+import Favoritos from '../containers/Favoritos';
 
 export const router = createBrowserRouter([
     {
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
     {
         path: '/pedidoConcluido',
         element: <PrivateRoutes element={<PedidoConcluido />} />,
+    },
+    {
+        path: '/favoritos',
+        element: <PrivateRoutes element={<Favoritos />} />,
     },
     {
         path: paths.Order,

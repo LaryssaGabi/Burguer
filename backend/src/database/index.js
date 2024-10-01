@@ -7,8 +7,9 @@ import User from '../app/models/User';
 import Product from '../app/models/Product';
 import Category from '../app/models/Category';
 import Address from '../app/models/Address';
+import Favorite from "../app/models/Favorite.js";
 
-const models = [User, Product, Category, Address]
+const models = [User, Product, Category, Address,Favorite]
 
 class Database {
     constructor() {

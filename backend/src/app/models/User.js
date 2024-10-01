@@ -9,10 +9,10 @@ class User extends Model {
             password: Sequelize.VIRTUAL,
             password_hash: Sequelize.STRING,
             admin: Sequelize.BOOLEAN,
-            active: { 
+            active: {
                 type: Sequelize.BOOLEAN,
                 allowNull: false,
-                defaultValue: true, 
+                defaultValue: true,
             }
         }, {
             sequelize,
@@ -29,6 +29,7 @@ class User extends Model {
     }
 
     static associate(models) {
+        this.hasMany(models.Favorite, { foreignKey: 'user_id', as: 'favorites' });
         this.hasOne(models.Address, { foreignKey: 'user_id', as: 'address' });
     }
 

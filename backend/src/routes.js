@@ -8,6 +8,7 @@ import ProductController from './app/controllers/ProductController';
 import CategoryController from './app/controllers/CategoryController';
 import OrderController from './app/controllers/OrderController';
 import AddressController from './app/controllers/AddressController';
+import FavoriteController from './app/controllers/FavoriteController';
 
 const routes = new Router();
 const uploads = multer(multerConfig);
@@ -41,5 +42,10 @@ routes.put('/orders/:id', OrderController.update);
 routes.post('/address', AddressController.store);
 routes.get('/address', AddressController.show);
 routes.put('/address/:id', AddressController.update);
+
+// Rotas para favoritos
+routes.post('/favorites', FavoriteController.store); 
+routes.get('/favorites', FavoriteController.index); 
+routes.delete('/favorites/:product_id', FavoriteController.delete);
 
 export default routes;

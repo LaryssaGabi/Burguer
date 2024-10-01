@@ -26,7 +26,7 @@ export default function Header() {
                 <Divider />
                 <PageLinks isActive={pathname === '/contatos'}>Contatos</PageLinks>
                 <Divider />
-                <PageLinks isActive={pathname === '/favoritos'}>Favoritos</PageLinks>
+                <PageLinks onClick={() => navigate('/favoritos')} isActive={pathname.includes('favoritos')}>Favoritos</PageLinks>
             </SectionRight>
 
             <SectionLeft>
