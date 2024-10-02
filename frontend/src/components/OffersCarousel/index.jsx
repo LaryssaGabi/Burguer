@@ -11,15 +11,32 @@ import { useCard } from '../../hooks/CardContect';
 
 export default function OffersCarousel() {
     const [offers, setOffers] = useState([]);
+    const [liked, setLiked] = useState({});
+    const [ratings, setRatings] = useState({});
+    const { putProductInCard } = useCard();
 
     useEffect(() => {
         async function loadOffers() {
-            const { data } = await api.get('/products');
-            const onlyOffers = data.filter(product => product.offer).map(product => ({
-                ...product,
-                formatedPrice: formatCurrency(product.price),
-            }));
-            setOffers(onlyOffers);
+            try {
+                const { data } = await api.get('/products');
+                const onlyOffers = data.filter(product => product.offer).map(product => ({
+                    ...product,
+                    formatedPrice: formatCurrency(product.price),
+                }));
+                setOffers(onlyOffers);
+
+                
+                const favoriteResponse = await api.get('/favorites');
+                const favoriteProducts = favoriteResponse.data.map(fav => fav.product_id);
+
+                
+                setLiked(favoriteProducts.reduce((acc, productId) => {
+                    acc[productId] = true;
+                    return acc;
+                }, {}));
+            } catch (error) {
+                toast.error('Erro ao carregar ofertas ou favoritos.');
+            }
         }
 
         loadOffers();
@@ -33,16 +50,26 @@ export default function OffersCarousel() {
         { width: 1800, itemsToShow: 5 },
     ];
 
-    const [liked, setLiked] = useState({});
-    const [ratings, setRatings] = useState({});
-    const { putProductInCard } = useCard();
 
-    const handleLike = (id) => {
-        setLiked(prev => ({
-            ...prev,
-            [id]: !prev[id],
-        }));
+    const handleLike = async (id) => {
+        try {
+            if (liked[id]) {
+                await api.delete(`/favorites/${id}`);
+                toast.info('Produto removido dos favoritos.');
+            } else {
+                await api.post('/favorites', { product_id: id });
+                toast.success('Produto adicionado aos favoritos!');
+            }
+
+            setLiked(prev => ({
+                ...prev,
+                [id]: !prev[id], 
+            }));
+        } catch (error) {
+            toast.error('Erro ao atualizar favoritos.');
+        }
     };
+
 
     const handleRate = (id, rating) => {
         setRatings(prev => ({
@@ -62,7 +89,7 @@ export default function OffersCarousel() {
 
             <Carousel
                 itemsToShow={5}
-                style={{ width: '85%'}}
+                style={{ width: '85%' }}
                 breakPoints={breakPoints}
                 itemPadding={[20, 10]}
             >
@@ -70,7 +97,7 @@ export default function OffersCarousel() {
                     <ContainerItens key={product.id}>
                         <Image src={product.url} alt="foto das ofertas" />
                         <HeartIcon
-                            liked={liked[product.id]}
+                            liked={liked[product.id]} 
                             onClick={() => handleLike(product.id)}
                         />
                         <ContainerDiv>

@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import formatCurrency from '../../utils/formatCrurrency';
 import { ContainerItens, Image, ContainerDiv, TextOverlay } from './cardproducts-styler';
 import StarRating from '../Caracteres/stars-styles';
@@ -14,24 +14,37 @@ export default function CardProducts({ product }) {
     const [ratings, setRatings] = useState({});
     const { putProductInCard } = useCard();
 
-    // Função para adicionar/remover dos favoritos
+    useEffect(() => {
+        const fetchFavorites = async () => {
+            try {
+                const response = await api.get('/favorites'); 
+                const favoriteProducts = response.data.map(fav => fav.product_id);
+
+                setLiked(favoriteProducts.reduce((acc, productId) => {
+                    acc[productId] = true;
+                    return acc;
+                }, {}));
+            } catch (error) {
+                toast.error('Erro ao buscar produtos favoritados.');
+            }
+        };
+
+        fetchFavorites();
+    }, []);
+
     const handleLike = async (id) => {
         try {
-            // Verificar se o produto já está favoritado
             if (liked[id]) {
-                // Remover dos favoritos
                 await api.delete(`/favorites/${id}`);
                 toast.info('Produto removido dos favoritos.');
             } else {
-                // Adicionar aos favoritos
                 await api.post('/favorites', { product_id: id });
                 toast.success('Produto adicionado aos favoritos!');
             }
 
-            // Alterar o estado local para refletir o novo status de favorito
             setLiked(prev => ({
                 ...prev,
-                [id]: !prev[id],
+                [id]: !prev[id], 
             }));
         } catch (error) {
             toast.error('Erro ao atualizar favoritos.');
@@ -51,10 +64,10 @@ export default function CardProducts({ product }) {
     };
 
     return (
-        <ContainerItens key={product.id}>
+        <ContainerItens>
             <Image src={product.url} alt="foto dos pedidos" />
             <HeartIcon
-                liked={liked[product.id]}
+                liked={liked[product.id]} 
                 onClick={() => handleLike(product.id)}
             />
             <ContainerDiv>
