@@ -86,7 +86,7 @@ export const CategoryButton = styled.button`
     line-height: 20px;
 `;
 
-export const ProductsContainer = styled.div`
+export const FavoriteContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
@@ -94,6 +94,7 @@ export const ProductsContainer = styled.div`
     justify-content: center;
     margin-top: 20px;
 `;
+
 export const Button = styled.button`
     display: flex;
     justify-content: center;

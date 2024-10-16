@@ -1,26 +1,39 @@
-// Favoritos.jsx
 import Categorias from '../../assets/categorias.svg';
 import { Container, Title, ImageCategorias, CategoriSection, ContainerTitle, SubTitle, Titles } from './favoritos-styles';
 import Header from '../../components/Header/header-index';
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
 import CardProducts from '../../components/CardProducts';
+import { FavoriteContainer } from '../Products/products-styles';
 
 export default function Favoritos() {
-    const [favoriteProducts, setFavoriteProducts] = useState([]);
+    const [products, setProducts] = useState([]);  // Todos os produtos
+    const [favoriteProducts, setFavoriteProducts] = useState([]);  // IDs dos favoritos
 
+    // Carregar todos os produtos e favoritos
     useEffect(() => {
-        const fetchFavorites = async () => {
+        const fetchProductsAndFavorites = async () => {
             try {
-                const response = await api.get('/favorites'); 
-                setFavoriteProducts(response.data); 
+                // Obter todos os produtos
+                const productsResponse = await api.get('/products');
+                setProducts(productsResponse.data);
+
+                // Obter favoritos (somente IDs)
+                const favoritesResponse = await api.get('/favorites');
+                const favoriteIds = favoritesResponse.data.map(fav => fav.product_id);
+                setFavoriteProducts(favoriteIds);
             } catch (error) {
-                console.error('Erro ao buscar favoritos:', error);
+                console.error('Erro ao buscar produtos e favoritos:', error);
             }
         };
 
-        fetchFavorites();
+        fetchProductsAndFavorites();
     }, []);
+
+    // Filtrar os produtos favoritos
+    const filteredFavorites = products.filter(product => 
+        favoriteProducts.includes(product.id)
+    );
 
     return (
         <Container>
@@ -35,15 +48,15 @@ export default function Favoritos() {
                 <Titles>Favoritos</Titles>
             </CategoriSection>
 
-            <div>
-                {favoriteProducts.length > 0 ? (
-                    favoriteProducts.map(product => (
+            <FavoriteContainer>
+                {filteredFavorites.length > 0 ? (
+                    filteredFavorites.map(product => (
                         <CardProducts key={product.id} product={product} />
                     ))
                 ) : (
                     <p>Você ainda não tem favoritos.</p>
                 )}
-            </div>
+            </FavoriteContainer>
         </Container>
     );
 }
