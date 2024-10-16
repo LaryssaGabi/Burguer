@@ -1,6 +1,6 @@
 import Categorias from '../../assets/categorias.svg'
 import { useEffect, useState } from 'react'
-import { Container, Title, ImageCategorias, CategoriSection, CategoriSeletion, CategoryButton, ContainerTitle, ProductsContainer, SubTitle, Button } from './products-styles'
+import { Container, Title, ImageCategorias, CategoriSection, CategoriSeletion, CategoryButton, ContainerTitle, FavoriteContainer, SubTitle, Button } from './products-styles'
 import api from '../../services/api'
 import CardProducts from '../../components/CardProducts'
 import { ChevronLeft } from 'lucide-react'
@@ -74,11 +74,11 @@ export default function Products() {
                         ))}
                     </CategoriSeletion>
 
-                    <ProductsContainer>
+                    <FavoriteContainer>
                         {filteredProducts && filteredProducts.map(product => (
                             <CardProducts key={product.id} product={product} />
                         ))}
-                    </ProductsContainer>
+                    </FavoriteContainer>
 
                     <Button onClick={handleBack}>
                         <ChevronLeft color="#5C2669" />
