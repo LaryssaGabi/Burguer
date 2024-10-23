@@ -8,7 +8,7 @@ import Category from '../app/models/Category';
 import Address from '../app/models/Address';
 import Favorite from "../app/models/Favorite.js";
 
-const models = [User, Product, Category, Address,Favorite]
+const models = [User, Product, Category, Address, Favorite]
 
 class Database {
     constructor() {
@@ -22,7 +22,7 @@ class Database {
         models.map(model => model.init(this.connection)).map(model => model.associate && model.associate(this.connection.models))
     }
 
-    mongo(){
+    mongo() {
         this.mongoConnection = mongoose.connect('mongodb://localhost:27017/devburger')
     }
 }

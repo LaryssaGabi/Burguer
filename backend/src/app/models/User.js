@@ -33,7 +33,7 @@ class User extends Model {
         this.hasOne(models.Address, { foreignKey: 'user_id', as: 'address' });
     }
 
-    // Método para verificar senha
+
     async checkPassword(password) {
         return bcrypt.compare(password, this.password_hash);
     }
