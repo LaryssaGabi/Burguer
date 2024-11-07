@@ -59,5 +59,9 @@ export const router = createBrowserRouter([
     {
         path: paths.EditProducts, 
         element: <PrivateRoutes element={<Admin />} isAdmin={true} />,
+    },
+    {
+        path: paths.NewCategory, 
+        element: <PrivateRoutes element={<Admin />} isAdmin={true} />,
     }
 ]);
