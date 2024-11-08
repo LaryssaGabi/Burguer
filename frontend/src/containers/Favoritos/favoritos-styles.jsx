@@ -60,7 +60,7 @@ export const CategoriSection = styled.div`
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: 100vh;
         z-index: -1; 
     }
 `;
@@ -81,17 +81,32 @@ export const Titles = styled.h2`
     color: #9758A6;
 `;
 
-export const ItemsSection = styled.div`
+export const FavoriteContainer = styled.div`
     display: flex;
-    flex-direction: column;
-    width: 100%;
-    background: #FFFFFF;
-    border-radius: 20px;
-    margin: 0 20px; 
-    margin-bottom: 20px; 
-
-    @media (min-width: 768px) {
-        margin-bottom: 0; 
-    }
+    justify-content: center;
+    align-items: center;
+    padding: 20px;  
 `;
 
+export const EmptyMessage = styled.div`
+    margin-top:4px;
+    width: 40vw;
+    background: #f9f9f9;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+   
+    
+    @media (max-width: 768px) {
+        font-size: 5vw;
+    }
+
+    p{
+        font-family: "Road Rage", sans-serif;
+        font-size: 3vw; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000000;
+    }
+`;

@@ -1,14 +1,14 @@
 import Categorias from '../../assets/categorias.svg';
-import { Container, Title, ImageCategorias, CategoriSection, ContainerTitle, SubTitle, Titles } from './favoritos-styles';
+import { Container, Title, ImageCategorias, CategoriSection, ContainerTitle, SubTitle, Titles, FavoriteContainer, EmptyMessage } from './favoritos-styles';
 import Header from '../../components/Header/header-index';
 import { useState, useEffect } from 'react';
 import api from '../../services/api';
 import CardProducts from '../../components/CardProducts';
-import { FavoriteContainer } from '../Products/products-styles';
+
 
 export default function Favoritos() {
-    const [products, setProducts] = useState([]);  // Todos os produtos
-    const [favoriteProducts, setFavoriteProducts] = useState([]);  // IDs dos favoritos
+    const [products, setProducts] = useState([]);
+    const [favoriteProducts, setFavoriteProducts] = useState([]);
 
     // Carregar todos os produtos e favoritos
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function Favoritos() {
     }, []);
 
     // Filtrar os produtos favoritos
-    const filteredFavorites = products.filter(product => 
+    const filteredFavorites = products.filter(product =>
         favoriteProducts.includes(product.id)
     );
 
@@ -54,7 +54,7 @@ export default function Favoritos() {
                         <CardProducts key={product.id} product={product} />
                     ))
                 ) : (
-                    <p>Você ainda não tem favoritos.</p>
+                    <EmptyMessage><p>Você ainda não tem favoritos.</p></EmptyMessage>
                 )}
             </FavoriteContainer>
         </Container>
