@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled, { keyframes } from 'styled-components';
 
 // Animação opcional, se desejar
@@ -50,9 +51,9 @@ const ShoppingBasketIcon = styled.svg`
   }
 `;
 
-// Componente com o SVG embutido
-export const ShoppingBasket = () => (
-  <ShoppingBasketButton>
+
+export const ShoppingBasket = ({ onClick }) => (
+  <ShoppingBasketButton onClick={onClick}>
     <ShoppingBasketIcon
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"

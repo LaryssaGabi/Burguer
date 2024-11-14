@@ -46,7 +46,7 @@ const StarRating = ({ rating, onRate }) => {
                 <SvgStar
                     key={index}
                     onClick={() => handleStarClick(index)}
-                    active={(index < rating).toString()} // Passar 'true' ou 'false' como string
+                    active={(index < rating).toString()} 
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                     fill="none"
