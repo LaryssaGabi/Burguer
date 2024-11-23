@@ -1,6 +1,6 @@
 # DevBurguer
 
-**DevBurguer** é uma aplicação web desenvolvida para a gestão e personalização de pedidos em uma hamburgueria. O projeto foi construído com o objetivo de melhorar a experiência do usuário, oferecendo funcionalidades modernas e eficientes, tanto para os clientes quanto para os administradores.
+**DevBurguer** é uma aplicação web desenvolvida para a gestão e personalização de pedidos em uma hamburgueria. O projeto foi construído com o objetivo de melhorar a experiência do usuário, oferecendo funcionalidades modernas e eficientes, tanto para os clientes quanto para os administradores
 
 ## Funcionalidades
 
